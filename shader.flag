@@ -1,0 +1,49 @@
+varying vec2 v_texCoord;
+uniform sampler2D s_texture;
+uniform float texture_width;
+uniform float texture_height;
+
+vec3 YCbCrtoRGB(float y, float cb, float cr)
+{
+	return vec3(
+            y                 + 1.402    * cr,
+            y - 0.344136 * cb - 0.714136 * cr,
+            y + 1.772    * cb
+    );
+}
+
+void main() {
+// 15x10 ChromaPack
+//	float y  = texture2D(s_texture, v_texCoord * vec2(2.0 / 3, 1.0)).a;
+//	float cb = texture2D(s_texture, v_texCoord * vec2(1.0 / 3, 0.5) + vec2(2.0 / 3, 0.5)).a - 0.5;
+//	float cr = texture2D(s_texture, v_texCoord * vec2(1.0 / 3, 0.5) + vec2(2.0 / 3, 0.0)).a - 0.5;
+
+// hatotank str
+// 20x10 ChromaPack + ClipingMask
+//	float y  = texture2D(s_texture, v_texCoord * vec2(1.0 / 2, 1.0)).a;
+//	float cb = texture2D(s_texture, v_texCoord * vec2(1.0 / 4, 0.5) + vec2(1.0 / 2, 0.5)).a - 0.5; 
+//	float cr = texture2D(s_texture, v_texCoord * vec2(1.0 / 4, 0.5) + vec2(1.0 / 2, 0.0)).a - 0.5;
+//	float a  = texture2D(s_texture, v_texCoord * vec2(1.0 / 4, 0.5) + vec2(1.0 / 4 * 3, 0.5)).a;
+
+// Ensemble Girls!!
+// default              --mask
+// +----+--------+      +----+--------+--------+
+// | Cr |        |      | Cr |        |        |
+// +----+   Y    |  or  +----+   Y    |  Mask  |
+// | Cb |        |      | Cb |        |        |
+// +----+--------+      +----+--------+----+---+
+
+//default//   float y  = texture2D(s_texture, v_texCoord * vec2(2.0 / 3, 1.0) + vec2(1.0 / 3, 0.0)).a;
+//default//   float cb = texture2D(s_texture, v_texCoord * vec2(1.0 / 3, 0.5) + vec2(0.0 / 3, 0.5)).a - 0.5;
+//default//   float cr = texture2D(s_texture, v_texCoord * vec2(1.0 / 3, 0.5) + vec2(0.0 / 3, 0.0)).a - 0.5;
+
+//default//   gl_FragColor = vec4(YCbCrtoRGB(y, cr, cb), 1);
+
+//--mask//    float y  = texture2D(s_texture, v_texCoord * vec2(2.0 / 5, 1.0) + vec2(1.0 / 5, 0.0)).a;
+//--mask//    float cb = texture2D(s_texture, v_texCoord * vec2(1.0 / 5, 0.5) + vec2(0.0 / 5, 0.5)).a - 0.5;
+//--mask//    float cr = texture2D(s_texture, v_texCoord * vec2(1.0 / 5, 0.5) + vec2(0.0 / 5, 0.0)).a - 0.5;
+//--mask//    float a  = texture2D(s_texture, v_texCoord * vec2(2.0 / 5, 1.0) + vec2(1.0 / 5 * 3, 0.0)).a;
+
+//--mask//  	gl_FragColor = vec4(YCbCrtoRGB(y, cr, cb), a);
+// hatotank end
+}
