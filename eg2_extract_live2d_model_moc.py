@@ -9,7 +9,7 @@ def main():
   parser = argparse.ArgumentParser()
   parser.add_argument("src")
   parser.add_argument("dest")
-  parser.add_argument("--moc",help="image invert",action="store_true")
+  parser.add_argument("--moc",help="for live2d moc file",action="store_true")
   args = parser.parse_args()
 
   with open(args.src,"rb") as f:
